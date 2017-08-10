@@ -57,6 +57,9 @@ function generateRow(data, status) {
         budget = budgetCount(data.budget, income, 'win');
     } else {
         budget = budgetCount(data.budget, income, 'lose');
+        // set negative value
+        income = '- ' + income;
+        console.log(income);
     }
 
     var table = document.getElementById('statusTable');
