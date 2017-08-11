@@ -3,6 +3,7 @@
  */
 
 var erase = document.getElementById('delete');
+var reset = document.getElementById('reset');
 var submit = document.getElementById('calculate');
 
 submit.onclick = function (event) {
@@ -43,6 +44,11 @@ erase.onclick = function (event) {
         table.deleteRow(rowCount);
     }
 
+};
+
+reset.onclick = function (event) {
+    event.preventDefault();
+    budgetCount.counter = undefined;
 };
 
 
