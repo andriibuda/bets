@@ -54,12 +54,16 @@ function generateRow(data, status) {
 
     if (status == 'Win') {
         income = (income * data.k) - income;
+        income = (Math.round(income * 100) / 100);
         budget = budgetCount(data.budget, income, 'win');
+
+        income = '+' + income;
+        console.log(income);
     } else {
         budget = budgetCount(data.budget, income, 'lose');
         // set negative value
-        income = '- ' + income;
-        console.log(income);
+        income = '-' + income;
+
     }
 
     var table = document.getElementById('statusTable');
@@ -72,7 +76,7 @@ function generateRow(data, status) {
 
     cell1.innerHTML = status;
     cell2.innerHTML = income;
-    cell3.innerHTML = budget;
+    cell3.innerHTML = '$'+budget;
 }
 
 function budgetCount(budget, income, status) {
@@ -86,8 +90,15 @@ function budgetCount(budget, income, status) {
         budgetCount.counter = +budgetCount.counter - +income;
     }
 
-    return budgetCount.counter;
+    return budgetCount.round(budgetCount.counter);
 }
+
+budgetCount.round = function(value) {
+    value = (Math.round(value * 100) / 100);
+    return value;
+};
+
+
 
 function winCounter(status) {
     if ( typeof winCounter().wins == 'undefined' ) {
