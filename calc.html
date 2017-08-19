@@ -8,24 +8,55 @@
 <link rel="stylesheet" href="css/main.css">
 <body class="clearfix">
 
-<div class="left input-form">
-    <form>
-        <label for="budget">Start budget: </label>
-        <input id="budget" type="number" required="required"><br>
-        <label for="k">k: </label>
-        <input id="k" type="number" step="0.1" required="required"><br>
-        <label for="w_rate">Win Rate (%):</label>
-        <input id="w_rate" type="number" required="required"><br>
-        <label for="n_bets">Number of bets: </label>
-        <input  id="n_bets" type="number" required="required"><br>
-        <label for="w_rate"> Amount of one bet: </label>
-        <input id="a_bet" type="number" required="required"><br>
-        <input type="submit" value="calculate" id="calculate">
-    </form>
+<div class="form-wrap left">
+    <div class="light-paper input-form">
+        <form>
+            <label for="budget">Start budget: </label>
+            <input id="budget" type="number" required="required"><br>
+            <label for="k">k: </label>
+            <input id="k" type="number" step="0.1" required="required"><br>
+            <label for="w_rate">Win Rate (%):</label>
+            <input id="w_rate" type="number" required="required"><br>
+            <label for="n_bets">Number of bets: </label>
+            <input  id="n_bets" type="number" required="required"><br>
+            <label for="w_rate"> Amount of one bet: </label>
+            <input id="a_bet" type="number" required="required"><br>
+            <input type="submit" value="calculate" id="calculate">
+        </form>
 
-    <div>
-        <submit id="delete">Clear Table</submit>
-        <submit id="reset">Reset Budget</submit>
+        <div>
+            <submit id="delete">Clear Table</submit>
+            <submit id="reset">Reset Budget</submit>
+        </div>
+    </div>
+
+    <div class="light-paper statistics clearfix">
+        <div class="left">
+            <div id="budget_display">
+                None
+            </div>
+            <div class="info">
+                Current Budget
+            </div>
+        </div>
+        <div class="right wins-loses clearfix">
+            <div class="left">
+                <div id="wins_display" class="green">
+                    --
+                </div>
+                <div class="info">
+                    Wins
+                </div>
+            </div>
+            <div class="left">
+                <div id="loses_display" class="red">
+                    --
+                </div>
+                <div class="info">
+                    Loses
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -37,6 +68,10 @@
             <th>Budget</th>
         </tr>
     </table>
+    <div class="navigation">
+        <div id="to_top">Top</div>
+        <div id="to_bottom">Bottom</div>
+    </div>
 </section>
 
 </body>

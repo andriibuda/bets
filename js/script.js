@@ -5,6 +5,10 @@
 var erase = document.getElementById('delete');
 var reset = document.getElementById('reset');
 var submit = document.getElementById('calculate');
+var toTop = document.getElementById('to_top');
+var toBottom = document.getElementById('to_bottom');
+
+// Behavior after submit button is clicked
 
 submit.onclick = function (event) {
     event.preventDefault();
@@ -32,25 +36,31 @@ submit.onclick = function (event) {
         }
     }
 
+    budgetCount.display("budget_display");
+    winCounter.displayStats();
 };
 
 erase.onclick = function (event) {
     event.preventDefault();
-    var table = document.getElementById('statusTable');
-    var tableRows = table.getElementsByTagName('tr');
-    var rowCount = tableRows.length;
-
-    while(--rowCount) {
-        table.deleteRow(rowCount);
-    }
-
+    clearTable();
 };
 
 reset.onclick = function (event) {
     event.preventDefault();
     budgetCount.counter = undefined;
+    budgetCount.display("budget_display");
+    winCounter.resetStats();
 };
 
+toTop.onclick = function() {
+    document.getElementById("statusTable").scrollIntoView(true);
+};
+
+toBottom.onclick = function () {
+    var lastRow = table.rows[ table.rows.length - 1 ];
+
+    lastRow.scrollIntoView(false);
+};
 
 // Functions
 
@@ -85,6 +95,13 @@ function generateRow(data, status) {
     cell3.innerHTML = '$'+budget;
 }
 
+/**
+ * Counts budget
+ *
+ * @param budget
+ * @param income
+ * @param status
+ */
 function budgetCount(budget, income, status) {
     if ( typeof budgetCount.counter == 'undefined' ) {
         budgetCount.counter = budget;
@@ -95,23 +112,45 @@ function budgetCount(budget, income, status) {
     } else {
         budgetCount.counter = +budgetCount.counter - +income;
     }
+    budgetCount.counter = budgetCount.round(budgetCount.counter);
+    // Count win or lose
+    winCounter(status);
 
-    return budgetCount.round(budgetCount.counter);
+    return budgetCount.counter;
 }
 
+/**
+ * Rounds budget
+ *
+ * @param value
+ * @returns {number|*}
+ */
 budgetCount.round = function(value) {
     value = (Math.round(value * 100) / 100);
     return value;
 };
 
+/**
+ * Display budget
+ *
+ *
+ * @param string elementId
+ */
+budgetCount.display = function(elementId) {
+    document.getElementById(elementId).innerHTML = budgetCount.counter;
+};
 
 
+/**
+ * winCounter function. Counts wins and loses
+ * @param status
+ */
 function winCounter(status) {
-    if ( typeof winCounter().wins == 'undefined' ) {
+    if ( typeof winCounter.wins == 'undefined' ) {
         winCounter.wins = 0;
     }
 
-    if ( typeof winCounter().loses == 'undefined' ) {
+    if ( typeof winCounter.loses == 'undefined' ) {
         winCounter.loses = 0;
     }
     
@@ -122,6 +161,33 @@ function winCounter(status) {
     }
 }
 
+/**
+ * Return the stat
+ */
 winCounter.getStats = function() {
     console.log('Wins: '+ winCounter.wins + ' Loses: ' + winCounter.loses);
 };
+
+winCounter.displayStats = function() {
+    document.getElementById("wins_display").innerHTML = winCounter.wins.toString();
+    document.getElementById("loses_display").innerHTML = winCounter.loses.toString();
+};
+
+winCounter.resetStats = function() {
+    document.getElementById("wins_display").innerHTML = '--';
+    document.getElementById("loses_display").innerHTML = '--';
+};
+
+
+/**
+ * Clears table
+ */
+function clearTable() {
+    var table = document.getElementById('statusTable');
+    var tableRows = table.getElementsByTagName('tr');
+    var rowCount = tableRows.length;
+
+    while(--rowCount) {
+        table.deleteRow(rowCount);
+    }
+}
